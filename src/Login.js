@@ -8,6 +8,7 @@ export default function Login() {
   let [pass, setPass] = useState("");
 
   const securityWidth = useRef(null);
+  const bodySecurity = useRef(null);
   const hintPassSecurity = useRef(null);
   let security = 0;
 
@@ -37,9 +38,13 @@ export default function Login() {
     regexDigits.test(pass) && (security = security + 25);
     pass.length >= 8 && (security = security + 25);
 
-    pass.length
-      ? (hintPassSecurity.current.style.visibility = "visible")
-      : (hintPassSecurity.current.style.visibility = "hidden");
+    if (pass.length) {
+      hintPassSecurity.current.style.visibility = "visible";
+      bodySecurity.current.style.visibility = "visible";
+    } else {
+      hintPassSecurity.current.style.visibility = "hidden";
+      bodySecurity.current.style.visibility = "hidden";
+    }
 
     switch (security) {
       case 25:
@@ -84,17 +89,20 @@ export default function Login() {
           onChange={(event) => setPass(event.target.value)}
         />
 
-        <div className="securityBody">
-          <div></div>
-          <div ref={securityWidth}></div>
+        <div className="securityBodyMain">
+          <div className="securityBody" ref={bodySecurity}>
+            <div></div>
+            <div ref={securityWidth}></div>
+          </div>
         </div>
 
-        <p ref={hintPassSecurity}>
+        <p className="hintSecurity" ref={hintPassSecurity}>
           از حروف الفبا بزرگ و کوچک، اعداد و کارکتر های خاص استفاده نمایید.
         </p>
 
         <input type="button" className="buttonInputNormal" value="ورود" />
       </section>
+      <p className="createBy">ساخته شده با ❤️ - محمد دوسی </p>
     </>
   );
 }

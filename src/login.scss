@@ -34,6 +34,7 @@ body,
     position: absolute;
     background-color: $backGroudColor;
     display: flex;
+    flex-direction: column;
     flex-wrap: nowrap;
     align-content: center;
     justify-content: center;
@@ -71,16 +72,6 @@ body,
             margin-top: 1rem;
             margin-bottom: 2rem;
         }
-
-        &:nth-child(6) {
-            text-align: right;
-            font-size: 12px;
-            font-weight: 500;
-            color: $blackColor;
-            opacity: .6;
-            margin-top: 1rem;
-            visibility: hidden;
-        }
     }
 
     .textInput {
@@ -100,13 +91,19 @@ body,
     }
 
 
+    .securityBodyMain {
+        width: 100%;
+        padding: 0 .5rem;
+    }
+
     .securityBody {
         width: 100%;
         position: relative;
+        margin-bottom: 1rem;
 
         >div {
             width: 100%;
-            height: .3rem;
+            height: .25rem;
             border-radius: 1000px;
             background-color: #f0efeb;
             position: absolute;
@@ -118,6 +115,15 @@ body,
         }
     }
 
+    .hintSecurity {
+        text-align: right;
+        font-size: 12px;
+        padding: 0 .5rem;
+        font-weight: 500;
+        color: $blackColor;
+        opacity: .6;
+        visibility: hidden;
+    }
 
 
     .buttonInputNormal {
@@ -128,7 +134,7 @@ body,
         font-weight: 800;
         padding: 1rem 4rem;
         border-radius: 12px;
-        margin-top: 2.5rem;
+        margin-top: 1.8rem;
         cursor: pointer;
         transition: .3 ease-in-out;
 
@@ -137,6 +143,14 @@ body,
         }
     }
 
+}
 
-
+.createBy {
+    text-align: center;
+    color: $blackColor;
+    font-size: 12px;
+    font-weight: 700;
+    position: absolute;
+    bottom: 0;
+    margin-bottom: 3rem;
 }
