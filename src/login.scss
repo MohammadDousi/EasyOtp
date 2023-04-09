@@ -1,0 +1,142 @@
+$primeryColor : #bdb2ff;
+$primeryColorDarker : #9181e9;
+$secoundColor : #ffadad;
+$whiteColor: #fff;
+$blackColor: #202020;
+$backGroudColor : #fffffc;
+
+$redSecurity : #ee6055;
+$yellowSecurity : #ffd97d;
+$greenLightSecurity : #7be0ad;
+$greenSecurity : #60d394;
+
+
+@import "./Webfonts/fontiran.css";
+
+* {
+    padding: 0;
+    margin: 0;
+    direction: rtl;
+    line-height: normal;
+    box-sizing: border-box;
+    background: transparent;
+    outline: 0;
+    list-style-type: none;
+    border: 0 transparent;
+    font-family: IRANSansX;
+}
+
+
+body,
+#root {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    background-color: $backGroudColor;
+    display: flex;
+    flex-wrap: nowrap;
+    align-content: center;
+    justify-content: center;
+    align-items: center;
+}
+
+
+.box {
+    width: 30%;
+    height: auto;
+    border-radius: 18px;
+    background-color: $backGroudColor;
+    box-shadow: 0 15px 50px 0px rgba($color: $primeryColorDarker, $alpha: .3);
+    padding: 2.5rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-content: center;
+    align-items: flex-end;
+
+
+    >p {
+        width: 100%;
+        text-align: center;
+        font-size: 24px;
+        font-weight: 800;
+        color: $primeryColorDarker;
+
+        &:nth-child(2) {
+            text-align: center;
+            font-size: 14px;
+            font-weight: 500;
+            color: $primeryColorDarker;
+            opacity: .6;
+            margin-top: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        &:nth-child(6) {
+            text-align: right;
+            font-size: 12px;
+            font-weight: 500;
+            color: $blackColor;
+            opacity: .6;
+            margin-top: 1rem;
+            visibility: hidden;
+        }
+    }
+
+    .textInput {
+        width: 100%;
+        background-color: $backGroudColor;
+        border: 2px solid rgba($color: $primeryColorDarker, $alpha: .15);
+        padding: 1rem 2rem;
+        border-radius: 12px;
+        margin: 0.8rem 0;
+        font-size: 14px;
+        font-weight: 600;
+
+        &::placeholder {
+            color: rgba($color: $primeryColorDarker, $alpha: .7);
+        }
+
+    }
+
+
+    .securityBody {
+        width: 100%;
+        position: relative;
+
+        >div {
+            width: 100%;
+            height: .3rem;
+            border-radius: 1000px;
+            background-color: #f0efeb;
+            position: absolute;
+
+            &:nth-child(2) {
+                width: 0%;
+                transition: .3s ease-in-out all;
+            }
+        }
+    }
+
+
+
+    .buttonInputNormal {
+        width: auto;
+        color: $whiteColor;
+        background-color: $primeryColorDarker;
+        font-size: 14px;
+        font-weight: 800;
+        padding: 1rem 4rem;
+        border-radius: 12px;
+        margin-top: 2.5rem;
+        cursor: pointer;
+        transition: .3 ease-in-out;
+
+        &:hover {
+            background-color: #8472e6;
+        }
+    }
+
+
+
+}
