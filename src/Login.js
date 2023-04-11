@@ -1,70 +1,94 @@
 import React, { useEffect, useRef, useState } from "react";
 
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
 import "./login.scss";
+import Toastiy from "./Toastiy";
 
 export default function Login() {
-  let emailInput = useRef();
-  let [email, setEmail] = useState("");
-  let [pass, setPass] = useState("");
+  let [data, setData] = useState({ email: "", pass: "" });
+  let [error, setError] = useState({});
+  let [touched, setTouched] = useState({});
 
   const securityWidth = useRef(null);
   const bodySecurity = useRef(null);
-  const hintPassSecurity = useRef(null);
+  let hintPassSecurity = useRef(null);
+
   let security = 0;
 
-  const regexAlphabet = /[a-zA-Z]{1}[a-zA-Z]{1}/g;
-  const regexSpecialAlphabet = /[!"#$%&'()*+,-./:;<=>?@[\]^_`{|}~]{1}/g;
-  const regexDigits = /\d/g;
+  const changeHandler = (event) => {
+    setData({ ...data, [event.target.name]: event.target.value });
+  };
+
+  const onFocusHandler = (event) => {
+    setTouched({ ...touched, [event.target.name]: true });
+  };
 
   useEffect(() => {
-    emailInput.current.focus();
-  }, []);
-
-  useEffect(() => {
-    if (!email) {
+    if (!data.email) {
+      error.email = "Invalid";
     } else {
       const re =
         /^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
 
-      if (re.test(email)) {
-        console.log(email);
+      if (re.test(data.email)) {
+        delete error.email;
+      } else {
+        error.email = "Invalid format email";
       }
     }
-  }, [email]);
 
-  useEffect(() => {
-    regexAlphabet.test(pass) && (security = security + 25);
-    regexSpecialAlphabet.test(pass) && (security = security + 25);
-    regexDigits.test(pass) && (security = security + 25);
-    pass.length >= 8 && (security = security + 25);
-
-    if (pass.length) {
-      hintPassSecurity.current.style.visibility = "visible";
-      bodySecurity.current.style.visibility = "visible";
-    } else {
-      hintPassSecurity.current.style.visibility = "hidden";
+    if (!data.pass) {
+      error.pass = true;
       bodySecurity.current.style.visibility = "hidden";
+    } else {
+      bodySecurity.current.style.visibility = "visible";
+      hintPassSecurity.current.style.visibility = "visible";
+      delete error.pass;
+
+      /[a-zA-Z]{1}[a-zA-Z]{1}/g.test(data.pass) && (security = security + 25);
+      /[!"#$%&'()*+,-./:;<=>?@[\]^_`{|}~]{1}/g.test(data.pass) &&
+        (security = security + 25);
+      /\d/g.test(data.pass) && (security = security + 25);
+      data.pass.length >= 8 && (security = security + 25);
     }
+    let reg = "",
+      color;
 
     switch (security) {
       case 25:
-        securityWidth.current.style.backgroundColor = "#ee6055";
+        color = "#ee6055";
+        reg = "رمز عبور بسیار ضعیف است.";
         break;
       case 50:
-        securityWidth.current.style.backgroundColor = "#ffd97d";
+        color = "#FAAB78";
+        reg = "رمز عبور ضعیف است.";
         break;
       case 75:
-        securityWidth.current.style.backgroundColor = "#a8e6cf";
+        color = "#9BB67C";
+        reg = "رمز عبور قوی است.";
         break;
       case 100:
-        securityWidth.current.style.backgroundColor = "#60d394";
+        color = "#5AA469";
+        reg = "رمز عبور بسیار قوی است.";
         break;
       default:
-        securityWidth.current.style.backgroundColor = "";
+        color = "";
         break;
     }
+
     securityWidth.current.style.width = `${security}%`;
-  }, [pass]);
+    securityWidth.current.style.backgroundColor = color;
+    hintPassSecurity.current.innerText = reg;
+    hintPassSecurity.current.style.color = color;
+  }, [data, touched]);
+
+  const loginBtnHandler = () => {
+    if (data.email && data.pass && !error.email && !error.pass) {
+      Toastiy("ایول همچی درسته", "succ");
+    }
+  };
 
   return (
     <>
@@ -76,17 +100,28 @@ export default function Login() {
           type="text"
           className="textInput"
           placeholder="ایمیل"
-          ref={emailInput}
-          value={email}
-          onChange={(event) => setEmail(event.target.value)}
+          name="email"
+          value={data.email}
+          onChange={changeHandler}
+          onFocus={onFocusHandler}
+          style={
+            error.email &&
+            touched.name && { border: "2px solid  rgba(238, 96, 85,0.5)" }
+          }
         />
 
         <input
           type="text"
           className="textInput"
           placeholder="رمز عبور"
-          value={pass}
-          onChange={(event) => setPass(event.target.value)}
+          name="pass"
+          value={data.pass}
+          onChange={changeHandler}
+          onFocus={onFocusHandler}
+          style={
+            error.pass &&
+            touched.name && { border: "2px solid  rgba(238, 96, 85,0.5)" }
+          }
         />
 
         <div className="securityBodyMain">
@@ -96,13 +131,29 @@ export default function Login() {
           </div>
         </div>
 
-        <p className="hintSecurity" ref={hintPassSecurity}>
-          از حروف الفبا بزرگ و کوچک، اعداد و کارکتر های خاص استفاده نمایید.
-        </p>
+        <p className="hintSecurity" ref={hintPassSecurity}></p>
 
-        <input type="button" className="buttonInputNormal" value="ورود" />
+        <input
+          type="button"
+          className="buttonInputNormal"
+          value="ورود"
+          onClick={loginBtnHandler}
+        />
       </section>
       <p className="createBy">ساخته شده با ❤️ - محمد دوسی </p>
+
+      <ToastContainer
+        position="bottom-left"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop
+        closeOnClick
+        rtl
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="light"
+      />
     </>
   );
 }

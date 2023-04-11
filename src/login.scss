@@ -6,9 +6,9 @@ $blackColor: #202020;
 $backGroudColor : #fffffc;
 
 $redSecurity : #ee6055;
-$yellowSecurity : #ffd97d;
-$greenLightSecurity : #7be0ad;
-$greenSecurity : #60d394;
+$yellowSecurity : #FAAB78;
+$greenLightSecurity : #9BB67C;
+$greenSecurity : #5AA469;
 
 
 @import "./Webfonts/fontiran.css";
@@ -24,6 +24,11 @@ $greenSecurity : #60d394;
     list-style-type: none;
     border: 0 transparent;
     font-family: IRANSansX;
+
+    -moz-font-feature-settings: "ss03";
+    -webkit-font-feature-settings: "ss03";
+    font-feature-settings: "ss03";
+
 }
 
 
@@ -34,16 +39,26 @@ body,
     position: absolute;
     background-color: $backGroudColor;
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     flex-wrap: nowrap;
     align-content: center;
     justify-content: center;
     align-items: center;
+    column-gap: 1.5rem;
 }
 
+.Toastify__toast-body>div:last-child {
+    font-size: 14px;
+
+}
+
+.Toastify__toast {
+    border-radius: 10px;
+    box-shadow: 0 1px 10px 0 rgba($color: $primeryColorDarker, $alpha: .3), 0 2px 15px 0 rgba($color: $primeryColorDarker, $alpha: .05);
+}
 
 .box {
-    width: 30%;
+    width: 33%;
     height: auto;
     border-radius: 18px;
     background-color: $backGroudColor;
@@ -68,7 +83,7 @@ body,
             font-size: 14px;
             font-weight: 500;
             color: $primeryColorDarker;
-            opacity: .6;
+            opacity: .7;
             margin-top: 1rem;
             margin-bottom: 2rem;
         }
@@ -83,6 +98,7 @@ body,
         margin: 0.8rem 0;
         font-size: 14px;
         font-weight: 600;
+        text-align: right;
 
         &::placeholder {
             color: rgba($color: $primeryColorDarker, $alpha: .7);
@@ -90,39 +106,41 @@ body,
 
     }
 
-
     .securityBodyMain {
         width: 100%;
-        padding: 0 .5rem;
-    }
+        padding: 0 .8rem;
 
-    .securityBody {
-        width: 100%;
-        position: relative;
-        margin-bottom: 1rem;
-
-        >div {
+        .securityBody {
             width: 100%;
-            height: .25rem;
-            border-radius: 1000px;
-            background-color: #f0efeb;
-            position: absolute;
+            position: relative;
+            margin-bottom: 1rem;
+            visibility: hidden;
 
-            &:nth-child(2) {
-                width: 0%;
-                transition: .3s ease-in-out all;
+            >div {
+                width: 100%;
+                height: .25rem;
+                border-radius: 1000px;
+                background-color: #f0efeb;
+                position: absolute;
+
+                &:nth-child(2) {
+                    width: 0%;
+                    transition: .3s ease-in-out all;
+                }
             }
         }
     }
+
+
 
     .hintSecurity {
         text-align: right;
         font-size: 12px;
         padding: 0 .5rem;
-        font-weight: 500;
+        font-weight: 700;
         color: $blackColor;
-        opacity: .6;
         visibility: hidden;
+        opacity: 1;
     }
 
 
