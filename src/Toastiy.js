@@ -2,7 +2,7 @@ import { toast } from "react-toastify";
 
 export default function Toastiy(message, type) {
 
-  const position = "bottom-left";
+  const position = "top-right";
   const autoClose = 5000 ;
   const theme = "light";
 
@@ -44,7 +44,7 @@ export default function Toastiy(message, type) {
       });
       break;
     case "info":
-      toast.ifo(message, {
+      toast.info(message, {
         position: position,
         autoClose: autoClose,
         hideProgressBar: false,

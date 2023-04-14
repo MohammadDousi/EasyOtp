@@ -5,7 +5,6 @@ import LoginWithNumber from "./LoginWithNumber";
 function App() {
   return (
     <>
-      {/* <Login /> */}
       <LoginWithNumber />
     </>
   );

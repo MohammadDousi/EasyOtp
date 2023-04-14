@@ -1,0 +1,123 @@
+$primeryColor : #bdb2ff;
+$primeryColorDarker : #9181e9;
+$secoundColor : #ffadad;
+$whiteColor: #fff;
+$blackColor: #202020;
+$backGroudColor : #fffffc;
+
+$redSecurity : #ee6055;
+$yellowSecurity : #FAAB78;
+$greenLightSecurity : #9BB67C;
+$greenSecurity : #5AA469;
+
+
+
+@mixin displayFlex($display, $flexDirection, $flexWrap , $justifyContent, $alignContent, $alignItems) {
+    display: $display;
+    flex-direction: $flexDirection;
+    flex-wrap: $flexWrap;
+    align-content: $alignContent;
+    justify-content: $justifyContent;
+    align-items: $alignItems;
+}
+
+@mixin fontSizeWeightColor($size, $weight, $color) {
+    font-size: $size;
+    font-weight: $weight;
+    color: $color;
+}
+
+@mixin borderRadiusBox($round) {
+    @if ($round !="") {
+        border-radius: $round;
+    }
+
+    @else {
+        border-radius: 12px;
+    }
+}
+
+@mixin inputText {
+    width: 100%;
+    padding: 1rem 2rem;
+    margin: 0.8rem 0;
+    border-radius: 12px;
+    @include borderRadiusBox("");
+    @include fontSizeWeightColor(18px, 900, $primeryColorDarker);
+    border: 2px solid rgba($color: $primeryColorDarker, $alpha: .15);
+    background-color: $backGroudColor;
+    text-align: center;
+
+    &::-webkit-outer-spin-button,
+    &::-webkit-inner-spin-button {
+        -webkit-appearance: none;
+    }
+
+    -moz-appearance: textfield;
+
+    &:disabled {
+        background-color: rgba($color: $blackColor, $alpha: .05);
+    }
+
+    &:focus {
+        border: 2px solid rgba($color: $primeryColorDarker, $alpha: 1);
+    }
+
+    &::placeholder {
+        color: rgba($color: $primeryColorDarker, $alpha: .5);
+    }
+
+
+}
+
+@mixin btnStyleNormal {
+    width: 35%;
+    padding: 1rem 0rem;
+    margin-top: 2.5rem;
+    @include fontSizeWeightColor(14px, 800, $whiteColor );
+    @include borderRadiusBox("");
+    background-color: $primeryColorDarker;
+    transition: .3 ease-in-out;
+    cursor: pointer;
+
+    &:hover {
+        background-color: #8472e6;
+    }
+}
+
+@mixin btnStyleNonBorder {
+
+    width: 35%;
+    padding: 1rem 0rem;
+    margin-top: 2.5rem;
+    @include fontSizeWeightColor(14px, 800, $primeryColorDarker );
+    @include borderRadiusBox("");
+    transition: .3 ease-in-out;
+    cursor: pointer;
+    
+    &:hover {
+        background-color: rgba($color: $primeryColorDarker, $alpha: .2);
+    }
+}
+
+
+@mixin media($size) {
+
+    @if($size ==M) {
+        @media (min-width:992px) and (max-width:1366px) {
+            @content;
+        }
+    }
+
+    @if($size ==Mobile) {
+        @media (min-width:0px) and (max-width:420px) {
+            @content;
+        }
+    }
+
+    @if($size ==SmallMobile) {
+        @media (min-width:0px) and (max-width:320px) {
+            @content;
+        }
+    }
+}

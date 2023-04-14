@@ -3,10 +3,46 @@ import React, { useEffect, useRef, useState } from "react";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-import "./loginNumber.scss";
+import "./login.scss";
 import Toastiy from "./Toastiy";
+import SendOtpCode from "./SendOtpCode";
 
 export default function LoginWithNumber() {
+  const [numberMobile, setNumberMobile] = useState("");
+  const [sendCode, setSendCode] = useState(false);
+  const [otpCode, setOtpCode] = useState("");
+  const boxMobileNumber = useRef(null);
+  const boxOtpCode = useRef(null);
+
+  const onChangeMobileNumberHandler = (event) => {
+    setNumberMobile(event.target.value);
+
+    if (/^09[0-9]{9}$/g.test(event.target.value)) {
+    }
+  };
+
+  useEffect(() => {
+    if (/^09[0-9]{9}$/g.test(numberMobile)) {
+      setSendCode(true);
+    } else {
+      setSendCode(false);
+    }
+  }, [numberMobile]);
+
+  const btnSendCodeHandler = () => {
+    if (sendCode) {
+      setOtpCode(SendOtpCode(numberMobile));
+      boxMobileNumber.current.style.display = "none";
+      boxOtpCode.current.style.display = "flex";
+    } else {
+      Toastiy("لطفاً شماره موبایل صحیح وارد نمایید", "info");
+    }
+  };
+
+  ////////////////////////////////////////////////////
+  ////////////////////////////////////////////////////
+  ////////////////////////////////////////////////////
+
   let [verifiCode, setVerifiCode] = useState({
     num_1: "",
     num_2: "",
@@ -20,10 +56,10 @@ export default function LoginWithNumber() {
   const num3 = useRef(null);
   const num4 = useRef(null);
   const num5 = useRef(null);
-  const btnChecker = useRef(null);
   const timer = useRef(null);
+  let getCode = "";
 
-  const changeHandler = (event) => {
+  const otpCodeChangeHandler = (event) => {
     setVerifiCode({ ...verifiCode, [event.target.name]: event.target.value });
 
     const [name, idNumber] = event.target.name.split("_");
@@ -43,24 +79,25 @@ export default function LoginWithNumber() {
       case 5:
         num5.current.disabled = false;
         num5.current.focus();
-        btnChecker.current.disabled = false;
         break;
     }
   };
 
   useEffect(() => {
-    // console.log(
-    //   verifiCode.num_1 +
-    //     verifiCode.num_2 +
-    //     verifiCode.num_3 +
-    //     verifiCode.num_4 +
-    //     verifiCode.num_5
-    // );
+    console.log(otpCode);
+
+    getCode =
+      verifiCode.num_1 +
+      verifiCode.num_2 +
+      verifiCode.num_3 +
+      verifiCode.num_4 +
+      verifiCode.num_5;
   }, [verifiCode]);
 
   useEffect(() => {
+
     let intervalTimer,
-      count = 1.5;
+      count = 0.5;
 
     count = count * 60;
     let min = Math.floor(count / 60);
@@ -70,8 +107,7 @@ export default function LoginWithNumber() {
 
     intervalTimer = setInterval(() => {
       second--;
-
-      if (second == 1) {
+      if (second == 0) {
         if (min == 0) {
           min = 0;
           clearInterval(intervalTimer);
@@ -83,14 +119,48 @@ export default function LoginWithNumber() {
       if (second < 10) {
         second = "0" + second;
       }
-      timer.current.innerText = "0" + min + ":" + second;
-      // timer.current.innerText = second;
+
+      timer.current.value = "0" + min + ":" + second;
+
     }, 1000);
   }, []);
 
+  const checkerHandler = () => {
+    if (sendCode) {
+      if (getCode.length == 5) {
+        if (getCode === otpCode) {
+          Toastiy("ثبت نام شما کامل شد", "succ");
+        } else {
+          Toastiy("کد وارد شده صحیح نمی باشد", "err");
+        }
+      } else {
+        Toastiy("لطفاً کد تایید را وارد نمایید.", "err");
+      }
+    }
+  };
+
   return (
     <>
-      <section className="box">
+      <section className="box" ref={boxMobileNumber}>
+        <p>ورود</p>
+        <p>برای ورود شماره موبایل خود را وارد نمایید</p>
+
+        <input
+          type="number"
+          maxLength={11}
+          value={numberMobile}
+          onChange={onChangeMobileNumberHandler}
+          className="textInput"
+        />
+        <input
+          type="button"
+          className="buttonInputNormal"
+          value="ورود"
+          onClick={btnSendCodeHandler}
+        />
+      </section>
+
+      <section className="box" ref={boxOtpCode} style={{ display: "block" }}>
         <p>ورود</p>
         <p>کد تایید دریافتی را در کادر پایین وارد نمایید</p>
 
@@ -100,7 +170,7 @@ export default function LoginWithNumber() {
             name="num_1"
             ref={num1}
             value={verifiCode.num_1}
-            onInput={changeHandler}
+            onInput={otpCodeChangeHandler}
             className="textInput"
             maxLength={1}
           />
@@ -109,7 +179,7 @@ export default function LoginWithNumber() {
             name="num_2"
             ref={num2}
             value={verifiCode.num_2}
-            onInput={changeHandler}
+            onInput={otpCodeChangeHandler}
             className="textInput"
             maxLength={1}
             disabled
@@ -119,7 +189,7 @@ export default function LoginWithNumber() {
             name="num_3"
             ref={num3}
             value={verifiCode.num_3}
-            onInput={changeHandler}
+            onInput={otpCodeChangeHandler}
             className="textInput"
             maxLength={1}
             disabled
@@ -129,7 +199,7 @@ export default function LoginWithNumber() {
             name="num_4"
             ref={num4}
             value={verifiCode.num_4}
-            onInput={changeHandler}
+            onInput={otpCodeChangeHandler}
             className="textInput"
             maxLength={1}
             disabled
@@ -139,7 +209,7 @@ export default function LoginWithNumber() {
             name="num_5"
             ref={num5}
             value={verifiCode.num_5}
-            onInput={changeHandler}
+            onInput={otpCodeChangeHandler}
             className="textInput"
             maxLength={1}
             disabled
@@ -147,16 +217,22 @@ export default function LoginWithNumber() {
         </div>
 
         <div className="boxTimer">
-          <p className="timer" ref={timer}></p>
+          <input
+            type="button"
+            className="buttonInputNonBorder"
+            value=""
+            onClick={checkerHandler}
+            ref={timer}
+          />
           <input
             type="button"
             className="buttonInputNormal"
             value="ورود"
-            ref={btnChecker}
-            disabled
+            onClick={checkerHandler}
           />
         </div>
       </section>
+      <p className="createBy">ساخته شده با ❤️ - محمد دوسی </p>
 
       <ToastContainer
         position="bottom-left"

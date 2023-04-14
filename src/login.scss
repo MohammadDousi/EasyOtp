@@ -1,16 +1,4 @@
-$primeryColor : #bdb2ff;
-$primeryColorDarker : #9181e9;
-$secoundColor : #ffadad;
-$whiteColor: #fff;
-$blackColor: #202020;
-$backGroudColor : #fffffc;
-
-$redSecurity : #ee6055;
-$yellowSecurity : #FAAB78;
-$greenLightSecurity : #9BB67C;
-$greenSecurity : #5AA469;
-
-
+@import "./mixin";
 @import "./Webfonts/fontiran.css";
 
 * {
@@ -24,27 +12,25 @@ $greenSecurity : #5AA469;
     list-style-type: none;
     border: 0 transparent;
     font-family: IRANSansX;
-
     -moz-font-feature-settings: "ss03";
     -webkit-font-feature-settings: "ss03";
     font-feature-settings: "ss03";
 
 }
 
-
 body,
 #root {
     width: 100%;
     height: 100%;
     position: absolute;
+    @include displayFlex(flex, row, nowrap, center, center, center);
     background-color: $backGroudColor;
-    display: flex;
-    flex-direction: row;
-    flex-wrap: nowrap;
-    align-content: center;
-    justify-content: center;
-    align-items: center;
     column-gap: 1.5rem;
+}
+
+
+.Toastify {
+    position: absolute;
 }
 
 .Toastify__toast-body>div:last-child {
@@ -53,57 +39,47 @@ body,
 }
 
 .Toastify__toast {
-    border-radius: 10px;
+    @include borderRadiusBox("");
     box-shadow: 0 1px 10px 0 rgba($color: $primeryColorDarker, $alpha: .3), 0 2px 15px 0 rgba($color: $primeryColorDarker, $alpha: .05);
 }
 
 .box {
     width: 33%;
     height: auto;
-    border-radius: 18px;
-    background-color: $backGroudColor;
-    box-shadow: 0 15px 50px 0px rgba($color: $primeryColorDarker, $alpha: .3);
     padding: 2.5rem;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-content: center;
-    align-items: flex-end;
-
+    @include displayFlex(flex, column, nowrap, center, center, flex-end);
+    background-color: $backGroudColor;
+    @include borderRadiusBox(18px);
+    box-shadow: 0 15px 50px 0px rgba($color: $primeryColorDarker, $alpha: .3);
 
     >p {
         width: 100%;
         text-align: center;
-        font-size: 24px;
-        font-weight: 800;
-        color: $primeryColorDarker;
+        @include fontSizeWeightColor(24px, 800, $primeryColorDarker);
 
         &:nth-child(2) {
-            text-align: center;
-            font-size: 14px;
-            font-weight: 500;
-            color: $primeryColorDarker;
+            @include fontSizeWeightColor(14px, 500, $primeryColorDarker);
             opacity: .7;
             margin-top: 1rem;
             margin-bottom: 2rem;
         }
     }
 
-    .textInput {
+    .boxInputNumber {
+
         width: 100%;
-        background-color: $backGroudColor;
-        border: 2px solid rgba($color: $primeryColorDarker, $alpha: .15);
-        padding: 1rem 2rem;
-        border-radius: 12px;
-        margin: 0.8rem 0;
-        font-size: 14px;
-        font-weight: 600;
-        text-align: right;
+        @include displayFlex(flex, row-reverse, nowrap, space-between, center, center);
 
-        &::placeholder {
-            color: rgba($color: $primeryColorDarker, $alpha: .7);
+        .textInput {
+            @include inputText;
+            width: 17%;
+            padding: 1rem 0;
         }
+    }
 
+
+    .textInput {
+        @include inputText;
     }
 
     .securityBodyMain {
@@ -119,7 +95,7 @@ body,
             >div {
                 width: 100%;
                 height: .25rem;
-                border-radius: 1000px;
+                @include borderRadiusBox(1000px);
                 background-color: #f0efeb;
                 position: absolute;
 
@@ -131,44 +107,43 @@ body,
         }
     }
 
-
-
     .hintSecurity {
+        @include fontSizeWeightColor(12px, 700, $blackColor);
         text-align: right;
-        font-size: 12px;
         padding: 0 .5rem;
-        font-weight: 700;
-        color: $blackColor;
         visibility: hidden;
         opacity: 1;
     }
 
-
     .buttonInputNormal {
-        width: auto;
-        color: $whiteColor;
-        background-color: $primeryColorDarker;
-        font-size: 14px;
-        font-weight: 800;
-        padding: 1rem 4rem;
-        border-radius: 12px;
-        margin-top: 1.8rem;
-        cursor: pointer;
-        transition: .3 ease-in-out;
-
-        &:hover {
-            background-color: #8472e6;
-        }
+        @include btnStyleNormal;
     }
+
+    .buttonInputNonBorder {
+        @include btnStyleNonBorder;
+    }
+
+
+    .boxTimer {
+        width: 100%;
+        margin-top: 2.5rem;
+        @include displayFlex(flex, row, nowrap, space-between, center, center);
+
+        .buttonInputNormal,.buttonInputNonBorder {
+            margin-top: 0;
+        }
+
+    }
+
 
 }
 
 .createBy {
+    @include fontSizeWeightColor(12px, 700, $blackColor);
     text-align: center;
-    color: $blackColor;
-    font-size: 12px;
-    font-weight: 700;
     position: absolute;
     bottom: 0;
     margin-bottom: 3rem;
+
+
 }
