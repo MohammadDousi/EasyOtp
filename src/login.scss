@@ -1,5 +1,6 @@
 @import "./mixin";
 @import "./Webfonts/fontiran.css";
+@import "./Webfonts/all.css";
 
 * {
     padding: 0;
@@ -24,10 +25,9 @@ body,
     height: 100%;
     position: absolute;
     @include displayFlex(flex, row, nowrap, center, center, center);
-    background-color: $backGroudColor;
+    background-color: var(--background-Dark);
     column-gap: 1.5rem;
 }
-
 
 .Toastify {
     position: absolute;
@@ -41,6 +41,21 @@ body,
 .Toastify__toast {
     @include borderRadiusBox("");
     box-shadow: 0 1px 10px 0 rgba($color: $primeryColorDarker, $alpha: .3), 0 2px 15px 0 rgba($color: $primeryColorDarker, $alpha: .05);
+}
+
+.changeModeStyle {
+    width: 45px;
+    height: 45px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    margin-left: 3rem;
+    margin-top: 2.5rem;
+    @include displayFlex(flex, row, nowrap, center, center, center);
+    @include borderRadiusBox(12px);
+    @include fontSizeWeightColor(16px, 500, $whiteColor);
+    background-color: $primeryColorDarker;
+    cursor: pointer;
 }
 
 .box {
@@ -129,7 +144,8 @@ body,
         margin-top: 2.5rem;
         @include displayFlex(flex, row, nowrap, space-between, center, center);
 
-        .buttonInputNormal,.buttonInputNonBorder {
+        .buttonInputNormal,
+        .buttonInputNonBorder {
             margin-top: 0;
         }
 

@@ -6,6 +6,7 @@ import "react-toastify/dist/ReactToastify.css";
 import "./login.scss";
 import Toastiy from "./Toastiy";
 import SendOtpCode from "./SendOtpCode";
+import ChangeMode from "./ChangeMode";
 
 export default function LoginWithNumber() {
   const [numberMobile, setNumberMobile] = useState("");
@@ -95,7 +96,6 @@ export default function LoginWithNumber() {
   }, [verifiCode]);
 
   useEffect(() => {
-
     let intervalTimer,
       count = 0.5;
 
@@ -116,12 +116,11 @@ export default function LoginWithNumber() {
           min--;
         }
       }
-      if (second < 10) {
-        second = "0" + second;
-      }
+
+      second < 10 && (second = "0" + second);
 
       timer.current.value = "0" + min + ":" + second;
-
+      second == 0 && min == 0 && (timer.current.value = "ارسال مجدد");
     }, 1000);
   }, []);
 
@@ -141,6 +140,15 @@ export default function LoginWithNumber() {
 
   return (
     <>
+      <div
+        className="changeModeStyle"
+        onCanPlay={() => {
+          ChangeMode("dark");
+        }}
+      >
+        <i className="fa fa-moon"></i>
+      </div>
+
       <section className="box" ref={boxMobileNumber}>
         <p>ورود</p>
         <p>برای ورود شماره موبایل خود را وارد نمایید</p>
@@ -160,7 +168,7 @@ export default function LoginWithNumber() {
         />
       </section>
 
-      <section className="box" ref={boxOtpCode} style={{ display: "block" }}>
+      <section className="box" ref={boxOtpCode} style={{ display: "none" }}>
         <p>ورود</p>
         <p>کد تایید دریافتی را در کادر پایین وارد نمایید</p>
 
@@ -220,7 +228,7 @@ export default function LoginWithNumber() {
           <input
             type="button"
             className="buttonInputNonBorder"
-            value=""
+            value="ارسال مجدد"
             onClick={checkerHandler}
             ref={timer}
           />

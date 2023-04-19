@@ -1,3 +1,30 @@
+:root {
+
+    --background-light: #ffffff;
+    --background-Dark: #14162E;
+
+    --footer-background: #1d262d;
+    /* #070818 => dark mode */
+    --header-background: #EAF0F7;
+    /* #070818 => dark mode */
+
+
+    --textcolor-black: #000;
+    --textcolor-white: #fff;
+
+
+    --lightcolorblue: #4461F2;
+    --lightcoloryellow: #DDA82A;
+    --backinput: #EAF0F7;
+    --back-dropdown: #EAF0F7;
+    --placeholder-input-textcolor: #4F555A;
+    --hover-alert-red: #e74747;
+
+    --shadow-btn-accunt: 0px 8px 15px #00000020;
+
+}
+
+
 $primeryColor : #bdb2ff;
 $primeryColorDarker : #9181e9;
 $secoundColor : #ffadad;
@@ -9,8 +36,6 @@ $redSecurity : #ee6055;
 $yellowSecurity : #FAAB78;
 $greenLightSecurity : #9BB67C;
 $greenSecurity : #5AA469;
-
-
 
 @mixin displayFlex($display, $flexDirection, $flexWrap , $justifyContent, $alignContent, $alignItems) {
     display: $display;
@@ -67,7 +92,6 @@ $greenSecurity : #5AA469;
         color: rgba($color: $primeryColorDarker, $alpha: .5);
     }
 
-
 }
 
 @mixin btnStyleNormal {
@@ -76,10 +100,9 @@ $greenSecurity : #5AA469;
     margin-top: 2.5rem;
     @include fontSizeWeightColor(14px, 800, $whiteColor );
     @include borderRadiusBox("");
-    background-color: $primeryColorDarker;
     transition: .3 ease-in-out;
     cursor: pointer;
-
+    
     &:hover {
         background-color: #8472e6;
     }
@@ -94,7 +117,7 @@ $greenSecurity : #5AA469;
     @include borderRadiusBox("");
     transition: .3 ease-in-out;
     cursor: pointer;
-    
+
     &:hover {
         background-color: rgba($color: $primeryColorDarker, $alpha: .2);
     }
